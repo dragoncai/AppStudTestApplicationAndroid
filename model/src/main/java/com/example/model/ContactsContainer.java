@@ -19,10 +19,20 @@ public class ContactsContainer implements Serializable {
         this.contacts = contacts;
     }
 
+    /**
+     *
+     * @return all the contacts
+     */
     public Set<IContact> getContacts() {
         return contacts;
     }
 
+    /**
+     * Retrieve a contact from the list when we already got all its information (except its isFavorite)
+     *
+     * @param contact the contact we want to retrieve
+     * @return
+     */
     public IContact getContact(IContact contact) {
         for (IContact iContact : contacts) {
             if (iContact.equals(contact)){

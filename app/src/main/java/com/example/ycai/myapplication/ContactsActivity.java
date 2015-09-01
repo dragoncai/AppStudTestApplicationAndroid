@@ -1,5 +1,6 @@
 package com.example.ycai.myapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -7,9 +8,15 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.example.model.IContact;
+import com.example.ycai.myapplication.helper.FileHelperClass;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Set;
 
+/**
+ * Display the contacts
+ */
 public class ContactsActivity extends AppCompatActivity {
 
     @Override
@@ -17,8 +24,15 @@ public class ContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
+        init();
+    }
+
+    /**
+     * Display the contacts within the {@link ContactView}
+     */
+    private void init() {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.contactsLayout);
-        Set<IContact> contacts = SplashActivity.application.getContactsContainer().getContacts();
+        Set<IContact> contacts = SplashScreen.application.getContactsContainer().getContacts();
         for (IContact contact : contacts) {
             linearLayout.addView(new ContactView(contact, this));
         }
@@ -42,7 +56,9 @@ public class ContactsActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
+        /*
+         * finish the activity when the top action bar back button is pressed in order to not call HomeActivity.onCreate()
+         */
         if (id == android.R.id.home) {
             finish();
             return true;
@@ -51,9 +67,18 @@ public class ContactsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * save the favorites whenever we are pausing the activity
+     */
     @Override
-    public void onBackPressed() {
-
-        super.onBackPressed();
+    protected void onPause() {
+        try {
+            FileOutputStream stream = openFileOutput("favoriteContacts", Context.MODE_PRIVATE);
+            Set<IContact> favoritesContacts = SplashScreen.application.getFavoritesContacts();
+            FileHelperClass.saveContactsInAFile(stream, favoritesContacts);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onPause();
     }
 }

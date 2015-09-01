@@ -12,7 +12,7 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class ApplicationTest {
     @Test
-    public void applicationMarkAContactAsAFavoriteShouldAddInFavoritesAndShouldBePartOfTheContacts() throws Exception {
+    public void applicationMarkAContactAsAFavoriteShouldAddInFavoritesAndShouldBePartOfTheContacts() {
         Application application = new Application();
         Contact contact = new Contact();
         application.getContacts().add(contact);
@@ -25,7 +25,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void applicationMarkAContactNotPresentInContactsAsAFavoriteShouldReturnAFailure() throws Exception {
+    public void applicationMarkAContactNotPresentInContactsAsAFavoriteShouldReturnAFailure() {
         Application application = new Application();
         Contact contact = new Contact();
 

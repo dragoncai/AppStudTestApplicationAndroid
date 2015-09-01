@@ -6,8 +6,14 @@ import com.example.model.IContact;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Application API class to manipulate all the contacts
+ */
 public class Application {
 
+    /**
+     * SUCCESS If an action has been successfully done,  else FAIL
+     */
     public enum ActionResult {
         SUCCESS,
         FAIL;
@@ -19,6 +25,19 @@ public class Application {
         contactsContainer = new ContactsContainer();
     }
 
+    public ContactsContainer getContactsContainer() {
+        return contactsContainer;
+    }
+
+    public void setContactsContainer(ContactsContainer contactsContainer) {
+        this.contactsContainer = contactsContainer;
+    }
+
+    /**
+     * mark a contact as a favorite
+     * @param contact the contact information
+     * @return {@link com.example.api.Application.ActionResult}
+     */
     public ActionResult markAsFavorite(IContact contact) {
         IContact iContact = contactsContainer.getContact(contact);
         if (iContact != null) {
@@ -28,6 +47,11 @@ public class Application {
         return ActionResult.FAIL;
     }
 
+    /**
+     * unmark a contact as a favorite
+     * @param contact the contact information
+     * @return {@link com.example.api.Application.ActionResult}
+     */
     public ActionResult unmarkAsFavorite(IContact contact) {
         IContact iContact = contactsContainer.getContact(contact);
         if (iContact != null && isFavorite(iContact)) {
@@ -37,22 +61,27 @@ public class Application {
         return ActionResult.FAIL;
     }
 
+    /**
+     *
+     * @param contact contact
+     * @return TRUE if is a favorite
+     */
     private boolean isFavorite(IContact contact) {
         return getFavoritesContacts().contains(contact);
     }
 
-    private boolean isPresentInContacts(IContact contact) {
-        return getContacts().contains(contact);
-    }
-
-    public ContactsContainer getContactsContainer() {
-        return contactsContainer;
-    }
-
+    /**
+     *
+     * @return contacts as a list
+     */
     public Set<IContact> getContacts() {
         return contactsContainer.getContacts();
     }
 
+    /**
+     *
+     * @return favorites as a list
+     */
     public Set<IContact> getFavoritesContacts() {
         Set<IContact> contacts = contactsContainer.getContacts();
         Set<IContact> toReturn = new HashSet<>();
@@ -62,9 +91,5 @@ public class Application {
             }
         }
         return toReturn;
-    }
-
-    public void setContactsContainer(ContactsContainer contactsContainer) {
-        this.contactsContainer = contactsContainer;
     }
 }

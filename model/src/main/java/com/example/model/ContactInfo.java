@@ -1,7 +1,7 @@
 package com.example.model;
 
 /**
- * Created by ycai on 31/08/2015.
+ * Containing all the json keys for the (de)serialization
  */
 public class ContactInfo {
     public static final String FIRSTNAME = "firstname";
