@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
 
@@ -36,11 +36,19 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            /*
+             * finish the activity when the top action bar back button is pressed in order to not call HomeActivity.onCreate()
+             */
+            case R.id.action_contacts:
+                startActivity(new Intent(this, ContactsActivity.class));
+                return true;
+            case R.id.action_favorites:
+                startActivity(new Intent(this, FavoritesActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -63,8 +71,7 @@ public class HomeActivity extends AppCompatActivity {
      * @param view
      */
     public void openContactsActivity(View view) {
-        Intent intent = new Intent(this, ContactsActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, ContactsActivity.class));
     }
 
     /**
@@ -72,7 +79,6 @@ public class HomeActivity extends AppCompatActivity {
      * @param view
      */
     public void openFavoriteActivity(View view) {
-        Intent intent = new Intent(this, FavoritesActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, FavoritesActivity.class));
     }
 }

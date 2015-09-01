@@ -1,6 +1,7 @@
 package com.example.ycai.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -52,19 +53,29 @@ public class ContactsActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            /*
+             * finish the activity when the top action bar back button is pressed in order to not call HomeActivity.onCreate()
+             */
+            case R.id.home:
+                return terminateTheActivity();
+            case R.id.action_home:
+                return terminateTheActivity();
+            case R.id.action_favorites:
+                startActivity(new Intent(this, FavoritesActivity.class));
+                return terminateTheActivity();
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        /*
-         * finish the activity when the top action bar back button is pressed in order to not call HomeActivity.onCreate()
-         */
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
+    }
 
-        return super.onOptionsItemSelected(item);
+    /**
+     * Terminate the activity
+     * @return true
+     */
+    private boolean terminateTheActivity() {
+        finish();
+        return true;
     }
 
     /**
